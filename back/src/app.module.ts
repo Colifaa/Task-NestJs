@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TasksModule } from './task/tasks.module';
+import { TasksGateway } from './task/tasks.gateway';
 
 @Module({
   imports: [
@@ -18,5 +19,6 @@ import { TasksModule } from './task/tasks.module';
     }),
     TasksModule,
   ],
+  providers: [TasksGateway], // Registra el gateway de WebSockets
 })
 export class AppModule {}
