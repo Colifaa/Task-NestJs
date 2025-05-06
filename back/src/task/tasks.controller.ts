@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Param, Patch, Delete } from '@nestjs/commo
 import { TasksService } from './tasks.service';
 import { Task } from './task.schema';
 
-@Controller('tasks')
+@Controller('tasks') // ESTA ES MI RUTA http://localhost:3001/tasks
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
