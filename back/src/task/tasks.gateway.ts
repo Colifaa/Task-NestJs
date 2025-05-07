@@ -1,7 +1,14 @@
 import { WebSocketGateway, WebSocketServer, SubscribeMessage } from '@nestjs/websockets';
 import { Server } from 'socket.io';
 
-@WebSocketGateway()
+@WebSocketGateway({
+  cors: {
+    origin: '*', // o mejor aún: ['https://tufrontend.vercel.app'],
+    methods: ['GET', 'POST'],
+    credentials: true,
+  },
+  namespace: '/',
+})
 export class TasksGateway {
   @WebSocketServer()
   server: Server;
@@ -16,7 +23,7 @@ export class TasksGateway {
 
   @SubscribeMessage('moveTask')
   handleMoveTask(client: any, data: { taskId: string; newColumnId: string }) {
-    console.log('Received moveTask event with data:', data); // Log para depurar
-    this.server.emit('taskMoved', data); // Emitir el evento a todos los clientes
+    console.log('Task moved:', data);
+    this.server.emit('taskMoved', data);
   }
 }
