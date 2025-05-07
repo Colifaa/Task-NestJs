@@ -8,12 +8,11 @@ class CustomIoAdapter extends IoAdapter {
     const server = super.createIOServer(port, {
       ...options,
       cors: {
-        origin: '*',
+        origin: process.env.FRONTEND_URL || 'http://localhost:3000',
         methods: ['GET', 'POST'],
         credentials: true,
       },
-      transports: ['websocket', 'polling'],
-      path: '/socket.io',
+      path: process.env.WS_PATH || '/socket.io',
     });
     return server;
   }
@@ -24,7 +23,7 @@ async function bootstrap() {
 
   // Habilitar CORS para permitir conexiones desde el frontend
   app.enableCors({
-    origin: '*',
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     credentials: true,
   });
